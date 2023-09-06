@@ -1,0 +1,30 @@
+--creating table of bakery items
+
+CREATE TABLE bakery (id INTEGER PRIMARY KEY, name TEXT, nut_free TEXT, price INTEGER, available_items INTEGER );
+
+INSERT INTO bakery VALUES (1, "plain_bagel", "yes", 1.99, 12);
+INSERT INTO bakery VALUES (2, "everything_bagel", "yes", 1.99, 10);
+INSERT INTO bakery VALUES (3, "blueberry_scone", "yes", 2.50, 15);
+INSERT INTO bakery VALUES (4, "plain_cheesecake", "yes", 3.00, 8);
+INSERT INTO bakery VALUES (5, "strawberry_cheesecake", "yes", 3.00, 8);
+INSERT INTO bakery VALUES (6, "banana_bread", "no", 2.50, 12);
+INSERT INTO bakery VALUES (7, "brownie", "yes", 1.50, 16);
+INSERT INTO bakery VALUES (8, "pecan_pie", "no", 2.50, 8);
+INSERT INTO bakery VALUES (9, "pumpkin_pie", "yes", 2.50, 8);
+INSERT INTO bakery VALUES (10, "baklava", "no", 2.00, 16);
+INSERT INTO bakery VALUES (11, "chocolate_banana_muffin", "yes", 3.00, 12);
+INSERT INTO bakery VALUES (12, "cranberry_biscotti", "no", 1.50, 18);
+INSERT INTO bakery VALUES (13, "cinnamon_brittle", "no", 2.00, 15);
+INSERT INTO bakery VALUES (14, "tres_leche_cake", "yes", 3.00, 10);
+INSERT INTO bakery VALUES (15, "caramel_pecan_monkey_bread", "no", 3.00, 8);
+
+SELECT * FROM bakery;
+
+--sorting items by price
+SELECT * FROM bakery ORDER BY price ASC;
+
+--show items that are have nuts
+SELECT * FROM bakery WHERE nut_free = "no";
+
+--display average cost of items
+SELECT AVG(price) FROM bakery;
