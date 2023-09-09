@@ -1,0 +1,26 @@
+-- order by price --
+
+SELECT *
+FROM superstore 
+ORDER BY price asc
+;
+
+-- how many items total -- 
+
+SELECT COUNT(item_id)
+FROM superstore
+;
+
+-- average cost of kitchen supplies --
+
+SELECT AVG(price), category
+FROM superstore
+WHERE category = "Kitchen Supplies"
+;
+
+-- total items in stock -- 
+
+SELECT SUM(stock_quantity)
+FROM superstore
+;
+
