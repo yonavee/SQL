@@ -1,0 +1,48 @@
+--complete data table
+
+SELECT * 
+FROM fortune_companies
+;
+
+--how many tech companies
+
+SELECT COUNT(industry) AS tech_companies
+FROM fortune_companies
+WHERE industry = "Technology"
+;
+
+--pto and maternity leave
+
+SELECT *
+FROM fortune_companies
+WHERE paid_time_off_days >= 20
+AND maternity_leave_weeks >= 10
+;
+
+--sum rev by company
+
+SELECT SUM(revenue), company_name
+FROM fortune_companies
+GROUP BY company_name
+HAVING SUM(revenue) > 300.0
+ORDER BY company_name desc
+;
+
+--tenure length
+
+SELECT company_name, avg_employee_tenure AS average_stay_at_company,
+CASE WHEN avg_employee_tenure >= 6.5 THEN "long tenure"
+WHEN avg_employee_tenure >=5 THEN "medium tenure"
+WHEN avg_employee_tenure >=4 THEN "short tenure"
+ELSE "temp"
+END AS temp
+FROM fortune_companies
+ORDER BY avg_employee_tenure asc
+;
+
+--no healthcare
+
+SELECT company_name
+FROM fortune_companies
+WHERE healthcare_benefits = 0
+;
