@@ -1,0 +1,94 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE entertainers (
+id INTEGER PRIMARY KEY,
+name TEXT,
+occupation TEXT);
+
+CREATE TABLE bio (
+id INTEGER PRIMARY KEY,
+work TEXT,
+born TEXT,
+married INTEGER,
+age INTEGER);
+
+INSERT INTO entertainers (name, occupation) VALUES
+("Zoe Saldana", "actress"),
+("Queen Latifah", "actress"),
+("Sandra Bullock", "actress"),
+("Marisa Tomei", "actress"),
+("Dakota Fanning", "actress"),
+("Taylor Swift", "singer"),
+("Tori Kelly", "singer"),
+("Miley Cyrus", "singer"),
+("Demi Lavato", "singer"),
+("Kelly Clarkson", "singer"),
+("Megan Abbott", "author"),
+("Diana Abu-Jaber", "author"),
+("Julia Alvarez", "author"),
+("Aimee Bender", "author"),
+("Sue Monk Kidd", "author")
+;
+
+INSERT INTO bio (work, born, married, age) VALUES
+("Avatar", "New Jersey", 1, 45),
+("Taxi", "New Jersey", 1, 53),
+("The Heat", "Virginia", 0, 59),
+("Spider Man: No Way Home", "New York", 0, 58),
+("Twilight", "Georgia", 0, 29),
+("Tear Drops On My Guitar", "Pennsylvania", 0, 33),
+("Missin U", "California", 1, 30),
+("Flowers", "Tennessee", 0, 30),
+("Sorry Not Sorry", "New Mexico", 0, 31),
+("Since U Been Gone", "Texas", 0, 41),
+("Beware The Women", "Michigan", 0, 52),
+("Crescent", "New York", 1, 63),
+("Afterlife", "New York", 1, 73),
+("Willful Creatures","California", 0, 54),
+("The Secret Life of Bees", "Georgia", 1, 75)
+;
+
+/* table */
+SELECT * FROM entertainers;
+
+SELECT * FROM bio;
+
+/* entertainers and their works */
+SELECT entertainers.name, bio.work
+FROM entertainers 
+JOIN bio
+ON entertainers.id = bio.id
+;
+
+/*entertainers from new york */
+SELECT entertainers.name, bio.born, bio.age
+FROM entertainers
+JOIN bio
+ON entertainers.id = bio.id
+WHERE born = "New York"
+ORDER BY age desc
+;
+
+/* over 45 years old */
+SELECT entertainers.name, bio.work, bio.age
+FROM entertainers
+JOIN bio
+ON entertainers.id = bio.id
+WHERE age > 45
+ORDER BY age asc
+;
+
+/* unmarried ppl */
+SELECT entertainers.name, bio.married
+FROM entertainers
+JOIN bio
+ON entertainers.id = bio.id
+WHERE married = 0
+;
+
+/* youngest person */
+SELECT MIN(bio.age), entertainers.name
+FROM bio
+JOIN entertainers
+ON bio.id = entertainers.id
+;
