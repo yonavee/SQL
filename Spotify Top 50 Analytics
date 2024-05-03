@@ -1,0 +1,86 @@
+/*For this project I downloaded Spotify's 2021 Top 50 Songs from Kaggle
+/*Then I created a table to insert the data into
+/*Finally, I performed analytics on the data using SQL
+
+/*Creating the table
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+/*After inserting the Spotify .csv I explored the data using the following SQL
+
+/*Viewed the data
+select *
+from bit_db.Spotifydata
+;
+
+/*Determined the top 10 most popular songs and their artist
+select artist_name, popularity, track_name
+from bit_db.Spotifydata
+where popularity > 90
+order by popularity desc
+limit 10
+;
+
+/*Then I determined the 10 least popular songs and their artist
+select artist_name, popularity, track_name
+from bit_db.Spotifydata
+where popularity < 90
+order by popularity asc
+limit 10
+;
+
+/*Compared the liveness of a song to how popular they were
+select artist_name, track_name, liveness, popularity
+from bit_db.Spotifydata
+order by liveness desc
+;
+
+/*Determined the danceability and energy of a song in major
+select track_name, danceability, energy
+from bit_db.Spotifydata
+where song_mode = 1
+order by danceability asc
+limit 10
+;
+
+/*Then determined the danceability and energy of a song in minor
+select track_name, danceability, energy
+from bit_db.Spotifydata
+where song_mode = 0
+order by danceability asc
+limit 10
+;
+
+/*Companre the energy and valence of artists and their songs
+select artist_name, track_name, energy, valence
+from bit_db.spotifydata
+order by valence desc
+;
+
+/*Determined the average length of a song in minutes
+select avg(duration_ms)/60000
+from bit_db.Spotifydata
+;
+
+/*Determined the song with the most spoken word
+select max(speechiness), artist_name, track_name
+from bit_db.Spotifydata
+;
