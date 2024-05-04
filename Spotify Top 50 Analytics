@@ -69,7 +69,7 @@ order by danceability asc
 limit 10
 ;
 
-/*Companre the energy and valence of artists and their songs
+/*Compared the energy and valence of artists and their songs
 select artist_name, track_name, energy, valence
 from bit_db.spotifydata
 order by valence desc
