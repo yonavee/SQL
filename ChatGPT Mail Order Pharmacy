@@ -1,0 +1,159 @@
+/*using chatgpt i generated data to create a variety of patient information and medications. i did this by asking chatgpt to generate a set of first and last names, 
+phone numbers and addresses that could be found in different regions in the USA: midwest, south, west, and east, and date of births between the ages of 17 and 80.
+
+i retreived the information and transferred them into excel. while organizing the data i noticed a few flaws. one of them being that even though i asked for a range 
+of date of births between 17 and 80 there were no birthdates in the senior range and i needed to manually edit the dobs to add variety.
+
+after creating the excel sheets i exported them into csv files and imported them into sqlite studio and created the following scenarios:*/
+
+/*create tables*/
+CREATE TABLE PatientInfo (
+patientID INTEGER,
+name TEXT,
+DOB TEXT,
+streetAddress TEXT,
+city TEXT,
+state TEXT,
+zipcode INTEGER,
+phoneNumber INTEGER,
+insurance TEXT)
+;
+
+CREATE TABLE Medications (
+medID INTEGER,
+medication TEXT,
+lotnumber TEXT)
+;
+
+CREATE TABLE PatientMeds (
+patientID INTEGER,
+recentLotNum TEXT
+)
+;
+
+ /*edited DOB format and explored data*/
+DELETE FROM PatientInfo;
+
+SELECT *
+FROM PatientInfo
+LIMIT 10
+;
+
+DELETE FROM PatientInfo;
+
+SELECT *
+FROM PatientInfo
+LIMIT 10
+;
+
+SELECT medID, medication
+FROM medications
+;
+
+/*cleaned data*/
+UPDATE patientinfo
+SET zipcode = REPLACE(zipcode, '�', ''),
+phonenumber = REPLACE(phonenumber, '�', ''),
+insurance = REPLACE(insurance, '�', '')
+;
+
+UPDATE medications
+SET medication = REPLACE(medication, '�', '')
+;
+
+/*show patient names and their corresponding medication using joins*/
+SELECT name, medication
+FROM patientinfo AS patient
+JOIN patientmeds AS ptmeds
+ON patient.patientID = ptmeds.patientID
+JOIN medications AS meds
+ON ptmeds.recentlotnum = meds.lotnumber
+;
+
+/*how many patients are listed*/
+SELECT COUNT(patientID)
+FROM patientinfo
+;
+
+/*create a query that shows the ID, name, and DOB of the patients that were born in 1989*/
+SELECT patientID, name, DOB
+FROM patientinfo
+WHERE DOB like "%1989"
+;
+
+/*show the ID, name, and DOB of patients over the age of 65*/
+SELECT patientID, name, DOB
+FROM patientinfo
+WHERE date("now") - strftime("%Y-%m-%d", DOB) > 65
+;
+
+/*show the ID, name, and DOB of patients under 35*/
+SELECT patientID, name, DOB
+FROM patientinfo
+WHERE date("now") - strftime("%Y-%m-%d", DOB) < 35
+;
+
+/*surveys on side effects wants to be sent out. list patients' name, address, and medication using CTE*/
+WITH ptadd_med AS (
+    SELECT name, streetaddress, city, state, zipcode, medication
+    FROM patientinfo AS patient
+    JOIN patientmeds AS ptmeds
+    ON patient.patientID = ptmeds.patientID
+    JOIN medications AS meds
+    ON ptmeds.recentlotnum = meds.lotnumber
+)
+SELECT *
+FROM ptadd_med
+WHERE medication LIKE 'Cardiovista'
+ORDER BY zipcode ASC
+;
+
+/*a recall on Hypertencor lot#N37852 is in process. letters and calls need to be sent. 
+select patient name, contact info, medication, and lot number order by zipcode*/
+WITH ptinfo_med AS (
+    SELECT name, streetaddress, city, state, zipcode, phonenumber, medication, lotnumber
+    FROM patientinfo AS patient
+    JOIN patientmeds AS ptmeds
+    ON patient.patientID = ptmeds.patientID
+    JOIN medications AS meds
+    ON ptmeds.recentlotnum = meds.lotnumber
+)
+SELECT * 
+FROM ptinfo_med
+WHERE lotnumber = 'N37852'
+ORDER BY zipcode ASC
+;
+
+/*CA, KS, LA, AL, and MS are experiencing natural disasters. override of medication is needed for emergency fills. 
+select patients id, name, city, and state order by states to approve of ER refills*/
+SELECT patientID, name, city, state
+FROM patientinfo
+WHERE state IN ("CA", "KS", "LA", "AL", "MS")
+ORDER BY state
+;
+
+/*create a case statement that show earthquakes in CA, tornadoes in KS, and hurricane in LA, AL, and MS*/
+SELECT DISTINCT(state),
+CASE 
+    WHEN state like "CA" THEN "Forest Fire"
+    WHEN state like "KS" THEN "Tornadoe"
+    WHEN state IN ("LA", "AL", "MS") THEN "Hurricane"
+    ELSE ""
+    END AS CurrentDisasters
+FROM patientinfo    
+ORDER BY state ASC
+;
+    
+/*who has MediGaurd (Medicare equivalent) plans*/
+SELECT name, insurance
+FROM patientinfo
+WHERE insurance like "MediGuard Plus"
+;
+
+/*scriptsure pro will be out of network. show patient id, name, addresses, and insurance 
+order by zip to send a letter for the change*/
+SELECT patientID, name, streetaddress, city, state, zipcode, phonenumber, insurance
+FROM patientinfo
+WHERE insurance like "ScriptSure Pro"
+ORDER BY zipcode
+;
