@@ -1,8 +1,7 @@
 /*using chatgpt i generated data to create a variety of patient information and medications. i did this by asking chatgpt to generate a set of first and last names, 
 phone numbers and addresses that could be found in different regions in the USA: midwest, south, west, and east, and date of births between the ages of 17 and 80.
 
-i retreived the information and transferred them into excel. while organizing the data i noticed a few flaws. one of them being that even though i asked for a range 
-of date of births between 17 and 80 there were no birthdates in the senior range and i needed to manually edit the dobs to add variety.
+i retreived the information and transferred them into excel to organize the data.
 
 after creating the excel sheets i exported them into csv files and imported them into sqlite studio and created the following scenarios:*/
 
