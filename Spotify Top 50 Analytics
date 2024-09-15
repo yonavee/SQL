@@ -1,6 +1,5 @@
 /*For this project I downloaded Spotify's 2021 Top 50 Songs from Kaggle
-/*Then I created a table to insert the data into
-/*Finally, I performed analytics on the data using SQL
+Created a table to insert the data into and performed analytics on the data using SQL*/
 
 /*Creating the table
 CREATE TABLE BIT_DB.Spotifydata (
