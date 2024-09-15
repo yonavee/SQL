@@ -1,4 +1,4 @@
-/*In this SQL, I'm querying a database with multiple tables to quantify statistics about customer and order data
+/*In this SQL, I'm querying a database with multiple tables to quantify statistics about customer and order data*/
 
 /* How many orders were placed in January? */
 SELECT count(orderid)
@@ -12,7 +12,7 @@ FROM BIT_DB.JanSales
 WHERE Product = 'iPhone'
 ;
 
-/* Select the customer account numbers for all the orders that were placed in February. */
+/* Select the customer account numbers for all the orders that were placed in February*/
 SELECT distinct acctnum
 FROM BIT_DB.customers cust
 INNER JOIN BIT_DB.FebSales Feb
