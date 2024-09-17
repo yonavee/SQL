@@ -1,4 +1,8 @@
 # Youa's SQL Portfolio
 
--- Welcome to my SQL portfolio. This code repository contains examples of SQL I've written. Feel free to take a look and reach out if you have any questions:
-theyoua.vang@gmail.com
+/*Welcome to my SQL portfolio
+Outside of my full time job I have been learning SQL
+This repository holds some of the projects I've been working on
+
+Feel free to take a look and reach out if you have any questions:
+youa-vang@outlook.com
